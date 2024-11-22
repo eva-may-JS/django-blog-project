@@ -11,6 +11,7 @@ class PostList(generic.ListView):
     paginate_by = 6
 
 
+# The slug parameter gets the argument value from the URL pattern named post_detail
 def post_detail(request, slug):
     """
     Display an individual :model:`blog.Post`.
@@ -28,8 +29,13 @@ def post_detail(request, slug):
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
 
+    # render combines the chosen template with the dictionary object specified, in this case {"post": post},
+    # so the information in the dictionary can be inserted into the template
     return render(
         request,
+        # path to the template file
         "blog/post_detail.html",
+        # This {'post': post} object is called "context", and is then available for use in the template as 
+        # the DTL variable {{ post }}
         {"post": post},
     )

@@ -24,6 +24,9 @@
                 <!-- The post content goes inside the card-text. -->
                 <!-- Use the | safe filter inside the template tags -->
                 <p class="card-text">
+                    <!-- The safe filter tells Django that this content is  safe to be interpreted as HTML.
+                    If you remove the safe filter, instead of rendering the HTML for us, Django displays 
+                    all of the HTML tags as well as the text. -->
                     {{ post.content | safe }}
                 </p>
             </div>
