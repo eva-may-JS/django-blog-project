@@ -28,6 +28,8 @@ def post_detail(request, slug):
 
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
+    comments = post.comments.all().order_by("-created_on")
+    comment_count = post.comments.filter(approved=True).count()
 
     # render combines the chosen template with the dictionary object specified, in this case {"post": post},
     # so the information in the dictionary can be inserted into the template
@@ -37,5 +39,8 @@ def post_detail(request, slug):
         "blog/post_detail.html",
         # This {'post': post} object is called "context", and is then available for use in the template as 
         # the DTL variable {{ post }}
-        {"post": post},
+        {"post": post,
+        "comments": comments,
+        "comment_count": comment_count,
+        },
     )
