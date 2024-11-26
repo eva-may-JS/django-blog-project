@@ -71,6 +71,7 @@
                         </p>
                         {% endif %}
                         {% if user.is_authenticated and comment.author == user %}
+                        <!-- The comment.id variable value will be passed to JS -->
                         <button class="btn btn-delete" comment_id="{{ comment.id }}">Delete</button>
                         <button class="btn btn-edit" comment_id="{{ comment.id }}">Edit</button>
                         {% endif %}
@@ -117,7 +118,11 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary"
           data-bs-dismiss="modal">Close</button>
-        <a id="deleteConfirm" href="#" class="btn
+        <!-- href attribute is dynamically updated to the URL for the comment_delete view
+         (JS calls the modal and URL (filling in the href) when Delete button is clicked thanks to event listener. 
+         The URL then calls the comment_delete view when the confirmation button (which now has an href of 
+         "delete_comment/<int:comment_id>") is clicked) -->
+          <a id="deleteConfirm" href="#" class="btn
           btn-danger">Delete</a>
       </div>
     </div>
