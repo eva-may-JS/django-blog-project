@@ -21,3 +21,21 @@ class TestAboutViews(TestCase):
         # response.context: checks that the correct objects were passed to the template by the view
         self.assertIsInstance(
             response.context['collaborate_form'], CollaborateForm)
+
+
+    def test_successful_collaboration_request_submission(self):
+        """Test for user sending a collaboration request in the About page"""
+
+        post_data = {
+            'name': 'Tess',
+            'email': 'test@test.com',
+            'message': 'This is my message'
+        }
+        # POST request tests need an additional argument, which is the data being POSTed
+        response = self.client.post(reverse(
+            'about'), post_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            b"Collaboration request received! I endeavour to respond within 2 working days.",
+            response.content
+        )
